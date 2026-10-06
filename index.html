@@ -1,59 +1,373 @@
+Copie o código abaixo e salve como **calculadora.html**. Salve a logo enviada na mesma pasta com o nome **logo.png**.
+
+O [HTML anterior](C:/Users/9lli/Documents/Codex/2026-10-06/cr/outputs/html/calculadora.html) já contém a logo incorporada, caso prefira usar um único arquivo.
+
+```html
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <title>Calculadora de Taxas de Cartão</title>
-    <style>
-        body {
-            text-align: center;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            height: 100vh;
-            padding-top: 50px;
-        }
-        .title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-    </style>
-    <script>
-        function calcular() {
-            const taxas = {
-                1: 3.15, 2: 4.19, 3: 4.83, 4: 5.46, 5: 6.09, 6: 6.71, 7: 7.38,
-                8: 7.99, 9: 8.60, 10: 9.19, 11: 9.78, 12: 10.38, 13: 10.98,
-                14: 11.54, 15: 12.11, 16: 12.69, 17: 13.25, 18: 13.81
-            };
-            
-            let valorProduto = parseFloat(document.getElementById("valorProduto").value);
-            let parcelas = parseInt(document.getElementById("parcelas").value);
-            let taxa = taxas[parcelas] || 0;
-            
-            let valorComTaxa = valorProduto * (1 + (taxa / 100));
-            let valorParcela = valorComTaxa / parcelas;
-            
-            document.getElementById("resultado").innerHTML =
-                `Valor Total com Taxa: R$ ${valorComTaxa.toFixed(2)}<br>` +
-                `Valor por Parcela: R$ ${valorParcela.toFixed(2)}`;
-        }
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GoPlace Shop | Calculadora de cartão</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    main {
+      width: 100%;
+      max-width: 520px;
+      padding: 32px;
+    }
+
+    .logo {
+      display: block;
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      margin: 0 auto 30px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 28px;
+      line-height: 1.2;
+    }
+
+    p {
+      margin: 0 0 24px;
+      color: #b6c3bc;
+      line-height: 1.5;
+    }
+
+    label {
+      display: block;
+      margin: 20px 0 9px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #bdccc3;
+      border-radius: 10px;
+      background: #fff;
+      color: #183528;
+      font: inherit;
+      font-size: 18px;
+    }
+
+    input:focus,
+    select:focus {
+      outline: 3px solid #aee4bf;
+      outline-offset: 2px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 22px;
+      padding: 16px;
+      border: 0;
+      border-radius: 10px;
+      background: #176b3f;
+      color: #fff;
+      font: inherit;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #10532f;
+    }
+
+    .resultado {
+      margin-top: 24px;
+      padding: 22px;
+      border-radius: 14px;
+      background: #eaf6ee;
+      color: #183528;
+    }
+
+    .titulo-resultado {
+      display: block;
+      font-size: 14px;
+      color: #3e6550;
+    }
+
+    .total {
+      display: block;
+      margin: 7px 0 18px;
+      font-size: 36px;
+      font-weight: bold;
+      overflow-wrap: anywhere;
+    }
+
+    .detalhe {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    .detalhe strong {
+      text-align: right;
+    }
+
+    .observacao {
+      margin: 17px 0 0;
+      color: #607167;
+      font-size: 12px;
+    }
+
+    .erro {
+      margin: 14px 0 0;
+      color: #ff9999;
+      font-size: 14px;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @media (max-width: 420px) {
+      body {
+        padding: 14px;
+      }
+
+      main {
+        padding: 24px;
+      }
+
+      h1 {
+        font-size: 25px;
+      }
+
+      .total {
+        font-size: 30px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="title">GO PLACE STORE</div>
-        <h2>Calculadora de Taxas de Cartão</h2>
-        <label>Valor do Produto:</label>
-        <input type="number" id="valorProduto" step="0.01">
-        <br>
-        <label>Quantidade de Parcelas:</label>
-        <input type="number" id="parcelas" min="1" max="18">
-        <br>
-        <button onclick="calcular()">Calcular</button>
-        <h3 id="resultado"></h3>
-    </div>
+  <main>
+    <img class="logo" src="logo.png" alt="GoPlace Shop">
+
+    <h1>Quanto passar no cartão?</h1>
+    <p>
+      Informe quanto quer receber. A calculadora inclui
+      a taxa no valor a cobrar.
+    </p>
+
+    <form id="formulario" novalidate>
+      <label for="valor">Valor líquido que quero receber (R$)</label>
+      <input
+        id="valor"
+        type="text"
+        inputmode="decimal"
+        value="5.000,00"
+        placeholder="Ex.: 5.000,00"
+        autocomplete="off"
+        aria-describedby="erro"
+      >
+
+      <label for="modalidade">Modalidade / quantidade de parcelas</label>
+      <select id="modalidade"></select>
+
+      <button type="submit">Calcular valor a cobrar</button>
+      <p id="erro" class="erro" role="alert" hidden></p>
+    </form>
+
+    <section
+      id="resultado"
+      class="resultado"
+      aria-live="polite"
+      hidden
+    >
+      <span class="titulo-resultado">Total a passar no cartão</span>
+      <output id="total" class="total"></output>
+
+      <div class="detalhe">
+        <span id="titulo-parcela">Valor médio por parcela</span>
+        <strong id="parcela"></strong>
+      </div>
+
+      <div class="detalhe">
+        <span>Taxa aplicada</span>
+        <strong id="taxa"></strong>
+      </div>
+
+      <div class="detalhe">
+        <span>Desconto da operadora</span>
+        <strong id="desconto"></strong>
+      </div>
+
+      <div class="detalhe">
+        <span>Valor líquido previsto</span>
+        <strong id="liquido"></strong>
+      </div>
+
+      <p id="observacao" class="observacao"></p>
+    </section>
+  </main>
+
+  <script>
+    // Taxas da coluna "Acima de R$ 80 mil".
+    const taxas = [
+      0.74, 2.68, 3.93, 4.45, 4.97,
+      5.48, 5.98, 6.50, 6.98, 7.50,
+      7.98, 8.48, 8.98, 11.98, 12.46,
+      12.96, 13.48, 14.01, 14.58
+    ];
+
+    const modalidades = taxas.map((taxa, indice) => ({
+      nome:
+        indice === 0
+          ? "Débito"
+          : indice === 1
+            ? "Crédito à vista"
+            : `Crédito ${indice}x`,
+      taxa,
+      parcelas: Math.max(1, indice)
+    }));
+
+    const elemento = id => document.getElementById(id);
+
+    const moeda = valor =>
+      new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+      }).format(valor);
+
+    const percentual = valor =>
+      new Intl.NumberFormat("pt-BR", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(valor) + "%";
+
+    modalidades.forEach((modalidade, indice) => {
+      const opcao = document.createElement("option");
+      opcao.value = indice;
+      opcao.textContent =
+        `${modalidade.nome} — ${percentual(modalidade.taxa)}`;
+
+      elemento("modalidade").append(opcao);
+    });
+
+    elemento("modalidade").value = "10";
+
+    function interpretarValor(texto) {
+      const valor = texto
+        .trim()
+        .replace(/^R\$\s*/i, "")
+        .replace(/\s/g, "");
+
+      if (/^\d{1,3}(\.\d{3})+(,\d{1,2})?$/.test(valor)) {
+        return Number(valor.replace(/\./g, "").replace(",", "."));
+      }
+
+      if (/^\d+(,\d{1,2})?$/.test(valor)) {
+        return Number(valor.replace(",", "."));
+      }
+
+      if (/^\d+\.\d{1,2}$/.test(valor)) {
+        return Number(valor);
+      }
+
+      return NaN;
+    }
+
+    function calcular(valorDesejado, taxa) {
+      const desejadoCentavos = Math.round(valorDesejado * 100);
+
+      // Arredonda para cima para atingir o líquido desejado.
+      const totalCentavos = Math.ceil(
+        desejadoCentavos / (1 - taxa / 100) - 1e-8
+      );
+
+      const descontoCentavos = Math.round(
+        totalCentavos * taxa / 100
+      );
+
+      return {
+        total: totalCentavos / 100,
+        desconto: descontoCentavos / 100,
+        liquido: (totalCentavos - descontoCentavos) / 100
+      };
+    }
+
+    function atualizar(evento) {
+      if (evento) evento.preventDefault();
+
+      const valor = interpretarValor(elemento("valor").value);
+      const modalidade =
+        modalidades[Number(elemento("modalidade").value)];
+
+      if (
+        !Number.isFinite(valor) ||
+        valor <= 0 ||
+        valor > 1e10 ||
+        !modalidade
+      ) {
+        elemento("erro").textContent =
+          "Informe um valor válido maior que zero (ex.: 5.000,00).";
+        elemento("erro").hidden = false;
+        elemento("resultado").hidden = true;
+        return;
+      }
+
+      const resultado = calcular(valor, modalidade.taxa);
+
+      elemento("erro").hidden = true;
+      elemento("total").textContent = moeda(resultado.total);
+      elemento("parcela").textContent = moeda(
+        resultado.total / modalidade.parcelas
+      );
+
+      elemento("titulo-parcela").textContent =
+        modalidade.parcelas === 1
+          ? "Pagamento único"
+          : `Valor médio por parcela (${modalidade.parcelas}x)`;
+
+      elemento("taxa").textContent = percentual(modalidade.taxa);
+      elemento("desconto").textContent = moeda(resultado.desconto);
+      elemento("liquido").textContent = moeda(resultado.liquido);
+
+      elemento("observacao").textContent =
+        modalidade.parcelas === 1
+          ? "Total arredondado para cima ao centavo."
+          : "Total arredondado para cima ao centavo. " +
+            "As parcelas podem variar em centavos para fechar o total.";
+
+      elemento("resultado").hidden = false;
+    }
+
+    elemento("formulario").addEventListener("submit", atualizar);
+
+    ["valor", "modalidade"].forEach(id => {
+      elemento(id).addEventListener("input", () => {
+        elemento("resultado").hidden = true;
+        elemento("erro").hidden = true;
+      });
+    });
+
+    atualizar();
+  </script>
 </body>
 </html>
+```
